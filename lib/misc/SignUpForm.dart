@@ -46,13 +46,13 @@ class _SignUpFormState extends State<SignUpForm>{
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Center(
-                        child: Column(
+                      child:  Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Image(image: AssetImage("assets/img/title.png"))
+                            Image(image: AssetImage("assets/img/logo.png"),height: 50,),
                           ],
                         ),
-                      )
+
                   ),
                   SizedBox(height: 50),
                   /*logo*/
@@ -77,7 +77,7 @@ class _SignUpFormState extends State<SignUpForm>{
                      isShowTitle: true,
                      isShowCode: false,
                      isDownIcon: true,
-                     initialSelection: '+62',
+                     initialSelection: '+91',
                      showEnglishName: true,
                      onChanged: (code) {
                        print(code.name);
@@ -109,7 +109,7 @@ class _SignUpFormState extends State<SignUpForm>{
 
                       children: <Widget>[
                         SizedBox(width: 10,),
-                        Text("data", style: GoogleFonts.poppins(),),
+                        Text("+91", style: GoogleFonts.poppins(),),
                         SizedBox(width: 10,),
                         Container(
                           color: primaryGreyColor,
@@ -138,7 +138,11 @@ class _SignUpFormState extends State<SignUpForm>{
                   Container(
                     height: 50.0,
                     child: RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        print("object");
+
+                        Navigator.pushNamed(context, 'otpCode');
+                      },
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
                       padding: EdgeInsets.all(0.0),
                       child: Ink(

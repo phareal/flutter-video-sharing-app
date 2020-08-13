@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok/helpers/colors.dart';
+import 'package:tiktok/screens/OtpCodeScreen.dart';
+import 'package:tiktok/screens/SetPasswordScreen.dart';
 import 'dart:async';
 
 import 'package:tiktok/screens/SignUp.dart';
@@ -21,6 +23,8 @@ class Main extends StatelessWidget {
         'splash': (context) => SplashScreen(),
         // When navigating to the "/second" route, build the SecondScreen widget.
         'signUp' : (context) => SignUp(),
+        'otpCode' : (context) => OtpCodeScreen(),
+        'setPassword' : (context) => SetPasswordScreen(),
       },
       initialRoute: 'splash',
 
@@ -58,8 +62,8 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
 
         child: Container(
-          height: 130,
-          width: 130,
+          height: 100,
+          width: 100,
           decoration: BoxDecoration(
             gradient: LinearGradient(
                 colors: [primaryRedColor,primaryPurpleColor,primaryBlueColorDark,primaryBlueColor],
@@ -72,12 +76,8 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
                 children: <Widget>[
                   SizedBox(height: 20,),
-                  Image.asset(
-                    "assets/img/logo.png",height: 23,width: 70,
-                  ),
-                  Image.asset(
-                    "assets/img/title.png",height: 70,width: 70,
-                  ),
+                  Image(image: AssetImage("assets/img/logo.png"),height: 50,),
+
                 ],
               ),
           )
@@ -87,3 +87,4 @@ class _SplashScreenState extends State<SplashScreen> {
 
 
 }
+

@@ -35,6 +35,7 @@ dependencies:
   country_code_picker: ^1.4.0
   country_list_pick: ^1.0.0+5
   phone_number: ^0.6.2+4
+  sms_autofill: ^1.2.3
 
 dev_dependencies:
   flutter_test:
