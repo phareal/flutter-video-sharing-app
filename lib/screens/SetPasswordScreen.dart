@@ -136,7 +136,7 @@ class _SetPasswordScreen extends State<SetPasswordScreen>{
                           onPressed: () {
                             print("object");
 
-                            Navigator.pushNamed(context, 'setPassword');
+                            Navigator.pushNamed(context, 'dashboard');
                           },
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
                           padding: EdgeInsets.all(0.0),
