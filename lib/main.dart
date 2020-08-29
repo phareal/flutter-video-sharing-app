@@ -3,6 +3,8 @@ import 'package:tiktok/helpers/colors.dart';
 import 'package:tiktok/screens/Create.dart';
 import 'package:tiktok/screens/DashboardScreen.dart';
 import 'package:tiktok/screens/EditProfileScreen.dart';
+import 'package:tiktok/screens/MessagesList.dart';
+import 'package:tiktok/screens/NotificationsListScreen.dart';
 import 'package:tiktok/screens/OtpCodeScreen.dart';
 import 'package:tiktok/screens/ProfilePage.dart';
 import 'package:tiktok/screens/ScreenForFilters.dart';
@@ -38,7 +40,9 @@ class Main extends StatelessWidget {
         'ForFilters' : (context) => ScreenForFilters(),
         'ForVideoFilters' : (context) => ScreenForVideosFilters(),
         'SelectBackground' : (context) => SelectBackgroundScreen(),
-        'EditUserProfile' : (context) => EditUserProfile()
+        'EditUserProfile' : (context) => EditUserProfile(),
+        'MessagesList' : (context) => MessagesListScreen(),
+        'NotificationList' : (context) => NotificationsListScreen(),
       },
       initialRoute: 'profile',
 
