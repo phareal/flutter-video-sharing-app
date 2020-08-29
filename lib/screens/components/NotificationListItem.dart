@@ -53,7 +53,7 @@ class _NotificationsListItemState extends State<NotificationsListItem>{
                 alignment: Alignment.center,
                 child: Column(
                   children: <Widget>[
-                    Text("Welcome to This Short Video App",style: GoogleFonts.poppins(
+                    Text("Welcom to This Short Video App",style: GoogleFonts.poppins(
                         fontSize: 15,
                         color: Colors.white60
                     ),),
