@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tiktok/helpers/colors.dart';
+import 'package:tiktok/misc/ProfileDrawer.dart';
 import 'package:tiktok/screens/components/RightSideBar.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -13,11 +14,15 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  var  _profilePageScaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
+    return new DefaultTabController(
       length: 2,
-      child:   Scaffold(
+      child: Scaffold(
+        key: _profilePageScaffoldKey,
+        endDrawer: new ProfileDrawer(),
         appBar: AppBar(
           leading: IconButton(
               icon: Icon(
@@ -136,7 +141,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       friendsStatus,
                       SizedBox(height: 20,),
                       TabBar(
-                        labelColor: Colors.grey,
+                          labelColor: Colors.grey,
                           indicatorColor: Colors.grey,
                           tabs: [
                             Tab(
@@ -159,7 +164,10 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             IconButton(
               icon: Icon(Icons.dashboard, color: Colors.black),
-              onPressed: () {},
+              onPressed: () {
+                print("object");
+                _profilePageScaffoldKey.currentState.openEndDrawer();
+              },
             )
           ],
         ),
@@ -167,7 +175,7 @@ class _ProfilePageState extends State<ProfilePage> {
             children:[
               Container(
                 child: GridView.count(
-                    crossAxisCount: 3,
+                  crossAxisCount: 3,
                   physics: ScrollPhysics(),
                   shrinkWrap: true,
                   children: <Widget>[
@@ -177,10 +185,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: 100,
                         width: 100,
                         decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage("assets/img/profile.png")
-                          )
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage("assets/img/profile.png")
+                            )
                         ),
                       )
 
@@ -210,6 +218,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ] ),
       ),
     );
+
 
   }
 

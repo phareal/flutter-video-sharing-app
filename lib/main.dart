@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:tiktok/helpers/colors.dart';
 import 'package:tiktok/screens/Create.dart';
 import 'package:tiktok/screens/DashboardScreen.dart';
+import 'package:tiktok/screens/EditProfileScreen.dart';
 import 'package:tiktok/screens/OtpCodeScreen.dart';
 import 'package:tiktok/screens/ProfilePage.dart';
 import 'package:tiktok/screens/ScreenForFilters.dart';
 import 'package:tiktok/screens/ScreenForVideoEffects.dart';
+import 'package:tiktok/screens/SelectBackground.dart';
 import 'package:tiktok/screens/SetPasswordScreen.dart';
 import 'dart:async';
 
@@ -19,7 +21,10 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Ye Wala',
-      theme: ThemeData(),
+      theme: ThemeData(
+        bottomAppBarColor: Colors.black,
+        accentColor: Colors.black,
+      ),
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
         'splash': (context) => SplashScreen(),
@@ -32,8 +37,10 @@ class Main extends StatelessWidget {
         'createVideo' : (context) => CreateVideoScreen(),
         'ForFilters' : (context) => ScreenForFilters(),
         'ForVideoFilters' : (context) => ScreenForVideosFilters(),
+        'SelectBackground' : (context) => SelectBackgroundScreen(),
+        'EditUserProfile' : (context) => EditUserProfile()
       },
-      initialRoute: 'ForVideoFilters',
+      initialRoute: 'profile',
 
     );
   }
