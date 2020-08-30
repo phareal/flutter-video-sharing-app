@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok/helpers/colors.dart';
+import 'package:tiktok/screens/ConversationScreen.dart';
 import 'package:tiktok/screens/Create.dart';
 import 'package:tiktok/screens/DashboardScreen.dart';
 import 'package:tiktok/screens/DraftVideosScreen.dart';
@@ -10,6 +11,7 @@ import 'package:tiktok/screens/OtpCodeScreen.dart';
 import 'package:tiktok/screens/ProfilePage.dart';
 import 'package:tiktok/screens/ScreenForFilters.dart';
 import 'package:tiktok/screens/ScreenForVideoEffects.dart';
+import 'package:tiktok/screens/SearchVideosScreen.dart';
 import 'package:tiktok/screens/SelectBackground.dart';
 import 'package:tiktok/screens/SetPasswordScreen.dart';
 import 'dart:async';
@@ -45,8 +47,9 @@ class Main extends StatelessWidget {
         'MessagesList' : (context) => MessagesListScreen(),
         'NotificationList' : (context) => NotificationsListScreen(),
         'DraftsVideosScreen' : (context) => DraftsVideosScreen(),
+        'SearchVideoScreen' : (context) => SearchVideosScreen(),
       },
-      initialRoute: 'DraftsVideosScreen',
+      initialRoute: 'SearchVideoScreen',
 
     );
   }

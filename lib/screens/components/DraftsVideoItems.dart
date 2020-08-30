@@ -34,7 +34,7 @@ class _DraftsVideosItemsState extends State<DraftsVideosItems>{
         alignment: Alignment.topRight,
         child: Container(
           child: IconButton(
-            icon: Icon(MaterialCommunityIcons.trash_can_outline,color: Colors.white,),
+            icon: Icon(FontAwesome.trash_o,color: Colors.white,),
             onPressed: (){
               print("remove");
             },
