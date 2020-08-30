@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tiktok/helpers/colors.dart';
 import 'package:tiktok/screens/Create.dart';
 import 'package:tiktok/screens/DashboardScreen.dart';
+import 'package:tiktok/screens/DraftVideosScreen.dart';
 import 'package:tiktok/screens/EditProfileScreen.dart';
 import 'package:tiktok/screens/MessagesList.dart';
 import 'package:tiktok/screens/NotificationsListScreen.dart';
@@ -43,8 +44,9 @@ class Main extends StatelessWidget {
         'EditUserProfile' : (context) => EditUserProfile(),
         'MessagesList' : (context) => MessagesListScreen(),
         'NotificationList' : (context) => NotificationsListScreen(),
+        'DraftsVideosScreen' : (context) => DraftsVideosScreen(),
       },
-      initialRoute: 'profile',
+      initialRoute: 'DraftsVideosScreen',
 
     );
   }
