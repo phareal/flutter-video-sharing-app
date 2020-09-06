@@ -68,6 +68,7 @@ class _DashboardScreenState extends State<DashboardScreen>  with SingleTickerPro
       )),
       bottomNavigationBar: CurvedNavigationBar(
         height: 70,
+        backgroundColor: Colors.black,
         index: 1,
 
         items: [
@@ -75,14 +76,25 @@ class _DashboardScreenState extends State<DashboardScreen>  with SingleTickerPro
             padding: EdgeInsets.all(15),
             child: Column(
               children: <Widget>[
-                Icon(
-                  AntDesign.heart,
-                  color: Colors.white,
-                ),
-                Text(
-                  "35",
-                  style: GoogleFonts.poppins(color: Colors.white),
-                )
+
+                InkWell(
+                  onTap: (){
+                    Navigator.pushNamed(context, 'signUp');
+                  },
+                  child: Column(
+                      children: <Widget>[
+                        Icon(
+                          AntDesign.heart,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          "35",
+                          style: GoogleFonts.poppins(color: Colors.white),
+                        )
+                      ],
+                    )
+                  ),
+
               ],
             ),
           ),
@@ -100,25 +112,32 @@ class _DashboardScreenState extends State<DashboardScreen>  with SingleTickerPro
           ),
 
           Padding(
-            padding: EdgeInsets.all(0),
+            padding: EdgeInsets.all(15),
             child: Column(
               children: <Widget>[
-                IconButton(icon: Icon(
-                AntDesign.sharealt,
-    color: Colors.white,
-    ) ,onPressed: (){
-                  Navigator.pushNamed(context, 'profile');
-                },),
 
-                Text(
-                  "Share",
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                  ),
-                )
+                InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, 'signUp');
+                    },
+                    child: Column(
+                      children: <Widget>[
+                        Icon(
+                          AntDesign.sharealt,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          "Share",
+                          style: GoogleFonts.poppins(color: Colors.white),
+                        )
+                      ],
+                    )
+                ),
+
               ],
             ),
           ),
+
         ],
         color: primaryBottomBg,
       ),
@@ -221,12 +240,17 @@ class _DashboardScreenState extends State<DashboardScreen>  with SingleTickerPro
           return Stack(
             alignment: Alignment.bottomRight,
             children: <Widget>[
-              Padding(padding: EdgeInsets.all(9.0),
-                child: CircleAvatar(
-                  radius: 25,
-                  backgroundImage: AssetImage("assets/img/profile.png")
-                ),
-              ),
+               GestureDetector(
+                 onTap: (){
+                   Navigator.pushNamed(context, 'BoomerangScreen');
+                 },
+                 child: Padding(padding: EdgeInsets.all(9.0),
+                   child: CircleAvatar(
+                       radius: 25,
+                       backgroundImage: AssetImage("assets/img/profile.png")
+                   ),
+                 ),
+               )
             ],
           );
         }

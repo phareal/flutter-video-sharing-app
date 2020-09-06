@@ -69,13 +69,31 @@ class _ScreenForVideosFiltersState extends State<ScreenForVideosFilters>  with S
       bottomNavigationBar: CurvedNavigationBar(
         height: 70,
         index: 1,
-
+        backgroundColor: Colors.transparent,
+        buttonBackgroundColor: primaryBottomBg,
         items: [
+
           Padding(
-            padding: EdgeInsets.all(4),
-            child: Icon(
-              FontAwesome.music,
-              color: Colors.white,
+            padding: EdgeInsets.all(25),
+            child: Column(
+              children: <Widget>[
+
+                InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, 'SelectBackground');
+                    },
+                    child: Column(
+                      children: <Widget>[
+                        Icon(
+                          FontAwesome.music,
+                          color: Colors.white,
+                        ),
+
+                      ],
+                    )
+                ),
+
+              ],
             ),
           ),
           Padding(
@@ -86,10 +104,26 @@ class _ScreenForVideosFiltersState extends State<ScreenForVideosFilters>  with S
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(4),
-            child: Icon(
-              AntDesign.API,
-              color: Colors.white,
+            padding: EdgeInsets.all(25),
+            child: Column(
+              children: <Widget>[
+
+                InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, 'ForFilters');
+                    },
+                    child: Column(
+                      children: <Widget>[
+                        Icon(
+                          AntDesign.API,
+                          color: Colors.white,
+                        ),
+
+                      ],
+                    )
+                ),
+
+              ],
             ),
           ),
         ],
@@ -207,7 +241,6 @@ class _ScreenForVideosFiltersState extends State<ScreenForVideosFilters>  with S
         ),
         SizedBox(height: 20),
         Container(
-          color: Colors.white,
           height: 70,
           width: MediaQuery.of(context).size.width,
           margin: EdgeInsets.all(5),

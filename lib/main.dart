@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok/helpers/colors.dart';
+import 'package:tiktok/screens/BoomerangScreen.dart';
+import 'package:tiktok/screens/CloseFriendScreen.dart';
 import 'package:tiktok/screens/ConversationScreen.dart';
 import 'package:tiktok/screens/Create.dart';
 import 'package:tiktok/screens/DashboardScreen.dart';
 import 'package:tiktok/screens/DraftVideosScreen.dart';
 import 'package:tiktok/screens/EditProfileScreen.dart';
+import 'package:tiktok/screens/Gallery.dart';
 import 'package:tiktok/screens/MessagesList.dart';
 import 'package:tiktok/screens/NotificationsListScreen.dart';
 import 'package:tiktok/screens/OtpCodeScreen.dart';
@@ -48,8 +51,11 @@ class Main extends StatelessWidget {
         'NotificationList' : (context) => NotificationsListScreen(),
         'DraftsVideosScreen' : (context) => DraftsVideosScreen(),
         'SearchVideoScreen' : (context) => SearchVideosScreen(),
+        'BoomerangScreen' : (context) => BoomerangScreen(),
+        'CloseFriendScreen' : (context) => CloseFriendsScreen(),
+        'Gallery' : (context) => GalleryScreen(),
       },
-      initialRoute: 'SearchVideoScreen',
+      initialRoute: 'splash',
 
     );
   }
@@ -68,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
   _SplashScreenState(){
     Future.delayed(Duration(seconds: 5), () {
       setState((){
-        Navigator.pushNamed(context, 'signUp');
+        Navigator.pushNamed(context, 'dashboard');
       });
     });
   }

@@ -60,7 +60,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               ],
                             ),
-                            SizedBox(width: 20,),
                             Column(
                               children: <Widget>[
                                 Text("@kripesh.mishra97",style: GoogleFonts.poppins(
@@ -160,7 +159,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 FontAwesome.bell,
                 color: Colors.black,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, 'NotificationList');
+              },
             ),
             IconButton(
               icon: Icon(Icons.dashboard, color: Colors.black),

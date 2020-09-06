@@ -85,15 +85,15 @@ class _RightSideBarState extends State<RightSideBar> with SingleTickerProviderSt
     var mediaQuery = MediaQuery.of(context).size;
     return Container(
       alignment: Alignment.bottomLeft,
-      margin: EdgeInsets.fromLTRB(0,50,0,0),
+      margin: EdgeInsets.fromLTRB(0,270,0,0),
       width: mediaQuery.width * 0.17,
       height: mediaQuery.height * 0.5,
       child: Center(
-         child: FloatingActionButton(
-             onPressed: (){
-               print("Dsdsd");
-             },
+         child: Container(
+
              child: SpeedDial(
+               onOpen: () => print('OPENING DIAL'),
+               onClose: () => print('DIAL CLOSED'),
                backgroundColor: Colors.black,
                closeManually: true,
                animatedIcon: AnimatedIcons.menu_close,
@@ -106,19 +106,31 @@ class _RightSideBarState extends State<RightSideBar> with SingleTickerProviderSt
                       },
                      backgroundColor: Colors.black,
                      child: IconButton(icon: Icon(FontAwesome.user), onPressed: (){
-                       print("object");
+                       Navigator.pushNamed(context, 'profile');
                      })
                  ),
                  SpeedDialChild(
                      backgroundColor: Colors.black,
-                     child: Icon(FontAwesome.search)
+                     child: IconButton(icon: Icon(FontAwesome.search), onPressed: (){
+                       print("object");
+                       Navigator.pushNamed(context, 'SearchVideoScreen');
+                     })
                  ), SpeedDialChild(
+                     onTap: () => print('FIRST CHILD'),
                      backgroundColor: Colors.purple,
-                     child: Icon(FontAwesome.plus)
+                     child: IconButton(icon: Icon(FontAwesome.plus), onPressed: (){
+        print("object");
+        Navigator.pushNamed(context, 'ForVideoFilters');
+      })
                  ), SpeedDialChild(
+                     onTap: () => print('FIRST CHILD'),
                      backgroundColor: Colors.black,
-                     child: Icon(FontAwesome.send)
+                     child: IconButton(icon: Icon(FontAwesome.send), onPressed: (){
+                       print("object");
+                       Navigator.pushNamed(context, 'MessagesList');
+                     })
                  ),SpeedDialChild(
+                     onTap: () => print('FIRST CHILD'),
                      backgroundColor: Colors.black,
                      child: Icon(FontAwesome.home)
                  ),

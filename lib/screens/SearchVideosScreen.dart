@@ -17,8 +17,8 @@ class SearchVideosScreen extends StatefulWidget {
 class _SearchVideoStateScreen extends State<SearchVideosScreen>{
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
+      resizeToAvoidBottomInset: false, // set it to f
       appBar: new AppBar(
         centerTitle: true,
         elevation: 0,
@@ -40,11 +40,11 @@ class _SearchVideoStateScreen extends State<SearchVideosScreen>{
            /*Containe*/
           children: <Widget>[
             Container(
-              margin: EdgeInsets.fromLTRB(10, 30, 10, 20),
+              margin: EdgeInsets.fromLTRB(20, 30, 10, 20),
               child: Row(
                 children: <Widget>[
                   Container(
-                      width:195,
+                      width:155,
                       height: 40,
                       padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                       decoration: BoxDecoration(
@@ -79,7 +79,7 @@ class _SearchVideoStateScreen extends State<SearchVideosScreen>{
                   ),
                   Container(
                       margin: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                      width:190,
+                      width:160,
                       height: 40,
                       padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                       decoration: BoxDecoration(
@@ -125,26 +125,28 @@ class _SearchVideoStateScreen extends State<SearchVideosScreen>{
             ),
             Container(
               margin: EdgeInsets.only(top: 10,left: 15,right: 15),
-              child: GridView.count(
-                crossAxisCount: 3,
-                physics: ScrollPhysics(),
-                shrinkWrap: true,
-                children: <Widget>[
-                  for(var i = 0 ;i<10;i++)
-                    Container(
-                      margin: EdgeInsets.only(right: 5,top: 5),
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage("assets/img/profile.png")
-                          )
-                      ),
-                    )
+              child: SingleChildScrollView(
+                child: Expanded(child: GridView.count(
+                  crossAxisCount: 3,
+                  physics: ScrollPhysics(),
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    for(var i = 0 ;i<10;i++)
+                      Container(
+                        margin: EdgeInsets.only(right: 5,top: 5),
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage("assets/img/profile.png")
+                            )
+                        ),
+                      )
 
-                ],
-              ),
+                  ],
+                ))
+              )
             )
           ],
         ),

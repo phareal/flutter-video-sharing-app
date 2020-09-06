@@ -6,14 +6,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tiktok/helpers/colors.dart';
 import 'package:tiktok/screens/components/RightSideBar.dart';
 
-class ScreenForFilters extends StatefulWidget {
+class CloseFriendsScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _ScreenForFiltersState();
+    return _CloseFriendsScreenState();
   }
 }
 
-class _ScreenForFiltersState extends State<ScreenForFilters>  with SingleTickerProviderStateMixin {
+class _CloseFriendsScreenState extends State<CloseFriendsScreen>  with SingleTickerProviderStateMixin {
 
   bool isOpened = false;
   AnimationController _animationController;
@@ -32,91 +32,114 @@ class _ScreenForFiltersState extends State<ScreenForFilters>  with SingleTickerP
       appBar: null,
       body:  SafeArea(
           child: Column(
-        /*top status */
-        children: <Widget>[
-        /*  Container(
+            /*top status */
+            children: <Widget>[
+              /*  Container(
             margin: EdgeInsets.all(5),
             width: mediaquery.width,
             child:friendsStatus ,
           ),*/
-          /*for the page content*/
-          Expanded(
-              child:Row(
-                children: <Widget>[
+              /*for the page content*/
+              Expanded(
+                  child:Row(
+                    children: <Widget>[
+                      Container(
+                        margin:EdgeInsets.fromLTRB(15, 0, 0, 0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            IconButton(
+                              icon: Icon(AntDesign.setting,color: Colors.white,size: 35),
+                              onPressed: (){
+                                print("object");
+                              },
+                            ),
+                            SizedBox(height: 25),
+                            IconButton(
+                              icon: Icon(AntDesign.camera,color: Colors.white,size: 35),
+                              onPressed: (){
+                                print("object");
+                              },
+                            ),
+                            SizedBox(height: 25),
+                            IconButton(
+                              icon: Icon(Icons.flash_on,color: Colors.white,size: 35),
+                              onPressed: (){
+                                print("object");
+                              },
+                            ),
+                            SizedBox(height: 25),
+                            IconButton(
+                              icon: Icon(Icons.close,color: Colors.white,size: 35),
+                              onPressed: (){
+                                print("object");
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(child: Container(
 
-                  Expanded(child: Container(
-
-                    child: SingleChildScrollView(
-                        child: Text("",style: TextStyle(color: Colors.white)),
-                    ),
-
-                  ),
-
-                  ),
-                ],
-
-              )
-
-          ),
-          bottomSectionPickup,
-
-        ],
-        /*main display*/
-
-        /**/
-
-      )),
-      bottomNavigationBar: CurvedNavigationBar(
-        height: 70,
-        index: 1,
-        backgroundColor: Colors.transparent,
-        items: [
-          InkWell(
-              onTap: (){
-                Navigator.pushNamed(context, 'SelectBackground');
-              },
-              child: Column(
-                children: <Widget>[
-                  Icon(
-                    FontAwesome.music,
-                    color: Colors.white,
-                  ),
-
-                ],
-              )
-          ),
-          Padding(
-            padding: EdgeInsets.all(4),
-            child: Icon(
-                AntDesign.videocamera,
-              color: Colors.white,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(25),
-            child: Column(
-              children: <Widget>[
-
-                InkWell(
-                    onTap: (){
-                      Navigator.pushNamed(context, 'ForFilters');
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        Icon(
-                          AntDesign.API,
-                          color: Colors.white,
+                        child: SingleChildScrollView(
+                          child: Text("",style: TextStyle(color: Colors.white)),
                         ),
 
-                      ],
-                    )
-                ),
+                      ),
 
-              ],
+                      ),
+
+                    ],
+
+                  )
+
+              ),
+
+
+
+            ],
+            /*main display*/
+
+            /**/
+
+          )),
+      bottomNavigationBar: CurvedNavigationBar(
+        color: primaryBottomBg,
+        backgroundColor: Colors.black,
+        buttonBackgroundColor: Colors.white,
+        items: <Widget>[
+          GestureDetector(
+
+            child: CircleAvatar(
+              radius: 20,
+              backgroundImage:AssetImage("assets/img/profile.png"),
             ),
           ),
+
+          GestureDetector(
+            onTap: (){
+              print("object");
+            },
+            child: Icon(
+              Icons.send,
+              color: Colors.purple,
+            ),
+
+          ),
+          GestureDetector(
+            onTap: (){
+              print("object");
+            },
+            child: Icon(
+              MaterialCommunityIcons.nature_people,
+              color: Colors.white,
+            ),
+
+          ),
+
         ],
-        color: primaryBottomBg,
+        onTap: (index) {
+          //Handle button tap
+        },
       ),
 
     );
@@ -194,21 +217,6 @@ class _ScreenForFiltersState extends State<ScreenForFilters>  with SingleTickerP
           children: <Widget>[
             Container(
 
-                width: 100,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30.0)
-                ),
-                child: Center(
-                  child: Text("Effects",style: GoogleFonts.poppins(
-                      color: Colors.black,
-                      fontSize:16
-                  )),
-                )
-            ),
-            Container(
-
-                width: 100,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                         colors: [primaryRedColor,primaryPurpleColor,primaryBlueColorDark,primaryBlueColor],
@@ -218,9 +226,25 @@ class _ScreenForFiltersState extends State<ScreenForFilters>  with SingleTickerP
                     ),
                     borderRadius: BorderRadius.circular(30.0)
                 ),
+                width: 100,
+
+                child: Center(
+                  child: Text("Effects",style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize:16
+                  )),
+                )
+            ),
+            Container(
+
+                width: 100,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30.0)
+                ),
                 child: Center(
                   child: Text("Filter",style: GoogleFonts.poppins(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize:16
                   )),
                 )
@@ -229,6 +253,7 @@ class _ScreenForFiltersState extends State<ScreenForFilters>  with SingleTickerP
         ),
         SizedBox(height: 20),
         Container(
+          color: Colors.white,
           height: 70,
           width: MediaQuery.of(context).size.width,
           margin: EdgeInsets.all(5),
@@ -237,27 +262,9 @@ class _ScreenForFiltersState extends State<ScreenForFilters>  with SingleTickerP
       ],
     ),
   );
-  
-  
-  Widget get friendsStatus => Container(
-    child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: 7,
-        itemBuilder: (context,index){
-          return Stack(
-            alignment: Alignment.bottomRight,
-            children: <Widget>[
-              Padding(padding: EdgeInsets.all(9.0),
-                child: CircleAvatar(
-                  radius: 25,
-                  backgroundImage: AssetImage("assets/img/profile.png")
-                ),
-              ),
-            ],
-          );
-        }
-    ),
-  );
+
+
+
   Widget get filter => Container(
     child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -266,10 +273,7 @@ class _ScreenForFiltersState extends State<ScreenForFilters>  with SingleTickerP
           return Stack(
             children: <Widget>[
               Padding(padding: EdgeInsets.all(9.0),
-                child: CircleAvatar(
-                  radius: 25,
-                  backgroundImage: AssetImage("assets/img/profile.png")
-                ),
+                child: Image(image: AssetImage("assets/img/profile.png")),
               ),
             ],
           );

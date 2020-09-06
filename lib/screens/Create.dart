@@ -103,6 +103,7 @@ class _CreateVideoScreenState extends State<CreateVideoScreen>  with SingleTicke
       )),
       bottomNavigationBar: CurvedNavigationBar(
         height: 70,
+        backgroundColor: Colors.black,
         index: 1,
 
         items: [
@@ -266,20 +267,32 @@ class _CreateVideoScreenState extends State<CreateVideoScreen>  with SingleTicke
         Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text("Friends",style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize:16
-            )),
+            InkWell(
+              onTap: (){
+                Navigator.pushNamed(context, 'DraftsVideosScreen');
+              },
+              child:  Text("Drafts",style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize:16
+              )),
+            ),
+
             SizedBox(width: 20),
             Text("Video",style: GoogleFonts.poppins(
                 color: primaryPurpleColor,
                 fontSize:16
             )),
             SizedBox(width: 20),
-            Text("Gallery",style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize:16
-            )),
+            InkWell(
+              onTap: (){
+                Navigator.pushNamed(context, 'Gallery');
+              },
+              child:Text("Gallery",style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize:16
+              )),
+            ),
+
             SizedBox(width: 20),
             Text("Photo",style: GoogleFonts.poppins(
                 color: Colors.white,

@@ -31,7 +31,9 @@ class _SelectBackgroundScreenState extends State<SelectBackgroundScreen> {
             Icons.arrow_back,
             color: Colors.black,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
       body: SingleChildScrollView(
