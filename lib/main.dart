@@ -52,7 +52,7 @@ class Main extends StatelessWidget {
         'signUp' : (context) => SignUp(),
         'otpCode' : (context) => OtpCodeScreen(),
         'setPassword' : (context) => SetPasswordScreen(),
-        'dashboard' : (context) => DashboardScreen(),
+        'dashboard' : (context) => DashboardScreen(cameraDescription: this.cameraDescription,),
         'profile' : (context) => ProfilePage(),
         'createVideo' : (context) => CreateVideoScreen(cameraDescription: this.cameraDescription,),
         'ForFilters' : (context) => ScreenForFilters(cameraDescriptions: this.cameraDescription),

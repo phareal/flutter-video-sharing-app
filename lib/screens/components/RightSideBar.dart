@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -17,7 +16,8 @@ class RightSideBar extends StatefulWidget {
 }
 
 
-class _RightSideBarState extends State<RightSideBar> with SingleTickerProviderStateMixin{
+class _RightSideBarState extends State<RightSideBar>
+    with SingleTickerProviderStateMixin {
   bool isOpened = false;
   AnimationController _animationController;
   Animation<Color> _buttonColor;
@@ -30,23 +30,25 @@ class _RightSideBarState extends State<RightSideBar> with SingleTickerProviderSt
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(vsync: this,duration: Duration(milliseconds: 500))
-     ..addListener(() {
-       setState(() {
+    _animationController =
+    AnimationController(vsync: this, duration: Duration(milliseconds: 500))
+      ..addListener(() {
+        setState(() {
 
-       });
-     });
-    _animationIcon = Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
-    _buttonColor = ColorTween(begin: Colors.blue,end:Colors.red).animate(CurvedAnimation(parent: _animationController,
-      curve: Interval(0.00, 1)
-    ));
+        });
+      });
+    _animationIcon =
+        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
+    _buttonColor = ColorTween(begin: Colors.blue, end: Colors.red).animate(
+        CurvedAnimation(parent: _animationController,
+            curve: Interval(0.00, 1)
+        ));
 
-    _translateButton =  Tween<double>(begin: _fabHeight, end: -14)
+    _translateButton = Tween<double>(begin: _fabHeight, end: -14)
         .animate(
         CurvedAnimation(parent: _animationController,
-            curve: Interval(0.0, 0.75,curve: _curve)));
+            curve: Interval(0.0, 0.75, curve: _curve)));
     super.initState();
-    
   }
 
 
@@ -57,23 +59,23 @@ class _RightSideBarState extends State<RightSideBar> with SingleTickerProviderSt
   }
 
 
-  Widget profileButton(){
+  Widget profileButton() {
     return Container(
-        child: FloatingActionButton(
-          heroTag: "btn1",
-          onPressed: (){
+      child: FloatingActionButton(
+        heroTag: "btn1",
+        onPressed: () {
 
-          },
-          tooltip: 'Profile',
-        ),
+        },
+        tooltip: 'Profile',
+      ),
     );
   }
 
 
-  Function animate(){
-    if(!isOpened){
+  Function animate() {
+    if (!isOpened) {
       _animationController.forward();
-    }else{
+    } else {
       _animationController.reverse();
       this.isOpened = !this.isOpened;
     }
@@ -81,67 +83,74 @@ class _RightSideBarState extends State<RightSideBar> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-
-    var mediaQuery = MediaQuery.of(context).size;
-    return Container(
-      alignment: Alignment.bottomLeft,
+    var mediaQuery = MediaQuery
+        .of(context)
+        .size;
+    return Align(
+      alignment: Alignment.topCenter,
+      child: SpeedDial(
+        onOpen: ()
+        =>
+            print('OPENING DIAL')
+        ,
+        onClose: () => print('DIAL CLOSED'),
+        backgroundColor: Colors.black,
+        closeManually: true,
+        animatedIcon: AnimatedIcons.menu_close,
+        overlayColor: Colors.black,
+        children: [
+          SpeedDialChild(
+              onTap: (){
+                print("dsd");
+                Navigator.pushNamed(context, 'profile');
+              },
+              backgroundColor: Colors.black,
+              child: IconButton(icon: Icon(FontAwesome.user), onPressed: (){
+                Navigator.pushNamed(context, 'profile');
+              })
+          ),
+          SpeedDialChild(
+              backgroundColor: Colors.black,
+              child: IconButton(icon: Icon(FontAwesome.search), onPressed: (){
+                print("object");
+                Navigator.pushNamed(context, 'SearchVideoScreen');
+              })
+          ), SpeedDialChild(
+              onTap: () => print('FIRST CHILD'),
+              backgroundColor: Colors.purple,
+              child: IconButton(icon: Icon(FontAwesome.plus), onPressed: (){
+                print("object");
+                Navigator.pushNamed(context, 'createVideo');
+              })
+          ), SpeedDialChild(
+              onTap: () => print('FIRST CHILD'),
+              backgroundColor: Colors.black,
+              child: IconButton(icon: Icon(FontAwesome.send), onPressed: (){
+                print("object");
+                Navigator.pushNamed(context, 'MessagesList');
+              })
+          ),SpeedDialChild(
+              onTap: () => print('FIRST CHILD'),
+              backgroundColor: Colors.black,
+              child: Icon(FontAwesome.home)
+          ),
+        ],
+      ),
+    );
+    /*  return Container(
+      alignment: Alignment.bottomCenter,
       margin: EdgeInsets.fromLTRB(0,270,0,0),
       width: mediaQuery.width * 0.17,
       height: mediaQuery.height * 0.5,
       child: Center(
          child: Container(
 
-             child: SpeedDial(
-               onOpen: () => print('OPENING DIAL'),
-               onClose: () => print('DIAL CLOSED'),
-               backgroundColor: Colors.black,
-               closeManually: true,
-               animatedIcon: AnimatedIcons.menu_close,
-               overlayColor: Colors.black,
-               children: [
-                 SpeedDialChild(
-                      onTap: (){
-                        print("dsd");
-                        Navigator.pushNamed(context, 'profile');
-                      },
-                     backgroundColor: Colors.black,
-                     child: IconButton(icon: Icon(FontAwesome.user), onPressed: (){
-                       Navigator.pushNamed(context, 'profile');
-                     })
-                 ),
-                 SpeedDialChild(
-                     backgroundColor: Colors.black,
-                     child: IconButton(icon: Icon(FontAwesome.search), onPressed: (){
-                       print("object");
-                       Navigator.pushNamed(context, 'SearchVideoScreen');
-                     })
-                 ), SpeedDialChild(
-                     onTap: () => print('FIRST CHILD'),
-                     backgroundColor: Colors.purple,
-                     child: IconButton(icon: Icon(FontAwesome.plus), onPressed: (){
-        print("object");
-        Navigator.pushNamed(context, 'createVideo');
-      })
-                 ), SpeedDialChild(
-                     onTap: () => print('FIRST CHILD'),
-                     backgroundColor: Colors.black,
-                     child: IconButton(icon: Icon(FontAwesome.send), onPressed: (){
-                       print("object");
-                       Navigator.pushNamed(context, 'MessagesList');
-                     })
-                 ),SpeedDialChild(
-                     onTap: () => print('FIRST CHILD'),
-                     backgroundColor: Colors.black,
-                     child: Icon(FontAwesome.home)
-                 ),
-               ],
-             ),
+
            ),
          )
 
-    );
+    );*/
   }
-  
 
 
 }

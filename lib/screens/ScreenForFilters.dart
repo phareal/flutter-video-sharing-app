@@ -94,7 +94,7 @@ class _ScreenForFiltersState extends State<ScreenForFilters>  with SingleTickerP
               )
           ),
           IconButton(icon: Icon(
-            FontAwesome.plus,
+            FontAwesome.video_camera,
             color: Colors.white,
           ), onPressed: (){
             print("object");

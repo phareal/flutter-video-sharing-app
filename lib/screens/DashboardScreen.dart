@@ -33,6 +33,49 @@ class _DashboardScreenState extends State<DashboardScreen>  with SingleTickerPro
   Curve _curve = Curves.easeOut;
   double _fabHeight = 56.0;
 
+  Widget get topLeftSectionPickup => Align(
+      alignment: Alignment.topRight,
+      child: Row(
+        children: <Widget>[
+          Container(
+            margin:EdgeInsets.fromLTRB(0, 0, 0, 0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(AntDesign.setting,color: Colors.white,size: 35),
+                  onPressed: (){
+                    print("object");
+                  },
+                ),
+                SizedBox(height: 25),
+                IconButton(
+                  icon: Icon(AntDesign.camera,color: Colors.white,size: 35),
+                  onPressed: (){
+                    print("object");
+                  },
+                ),
+                SizedBox(height: 25),
+                IconButton(
+                  icon: Icon(Icons.flash_on,color: Colors.white,size: 35),
+                  onPressed: (){
+                    print("object");
+                  },
+                ),
+                SizedBox(height: 25),
+                IconButton(
+                  icon: Icon(Icons.close,color: Colors.white,size: 35),
+                  onPressed: (){
+                    print("object");
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+
+      )
+  );
   @override
   Widget build(BuildContext context) {
     var mediaquery = MediaQuery.of(context).size;
@@ -40,37 +83,32 @@ class _DashboardScreenState extends State<DashboardScreen>  with SingleTickerPro
       backgroundColor: Colors.black,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: null,
-      body:  SafeArea(
-          child: Column(
-        /*top status */
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.all(5),
-            width: mediaquery.width,
-            child:friendsStatus ,
-          ),
-          /*for the page content*/
-          Expanded(
-              child:Row(
-                children: <Widget>[
-                  Expanded(child: Container(
-                    child: SingleChildScrollView(
-                        child: Text("",style: TextStyle(color: Colors.white),),
-                    ),
-                  ),
-                  ),
-                  RightSideBar()
-                ],
+      body: SafeArea(
+          child:Stack(
+            children: <Widget>[
+
+              Container(
+
+                  height: MediaQuery.of(context).size.height,
+                  child: AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    child: new CameraPreview(_controller),
+                  )
+
+              ),
+
+              friendsStatus,
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 0, 0, 250),
+                child:  RightSideBar(),
               )
-          ),
-          bottomSection,
 
-        ],
-        /*main display*/
 
-        /**/
 
-      )),
+
+            ],
+          )
+      ),
       bottomNavigationBar: CurvedNavigationBar(
         height: 70,
         backgroundColor: Colors.black,
