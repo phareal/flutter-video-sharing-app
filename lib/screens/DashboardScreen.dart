@@ -34,13 +34,14 @@ class _DashboardScreenState extends State<DashboardScreen>  with SingleTickerPro
   double _fabHeight = 56.0;
 
   Widget get topLeftSectionPickup => Align(
-      alignment: Alignment.topRight,
+      alignment: Alignment.topLeft,
       child: Row(
         children: <Widget>[
           Container(
             margin:EdgeInsets.fromLTRB(0, 0, 0, 0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 IconButton(
                   icon: Icon(AntDesign.setting,color: Colors.white,size: 35),
@@ -98,10 +99,48 @@ class _DashboardScreenState extends State<DashboardScreen>  with SingleTickerPro
               ),
 
               friendsStatus,
-              Container(
+              Positioned.fill(
+                child: Align(
+                    alignment: Alignment.centerRight,
+                    child:    Container(
+                      margin:EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          IconButton(
+                            icon: Icon(MaterialCommunityIcons.home,color: Colors.white,size: 35),
+                            onPressed: (){
+                              print("object");
+                            },
+                          ),
+                          SizedBox(height: 25),
+                          IconButton(icon: Icon(FontAwesome.send,color: Colors.white,), onPressed: (){
+                            print("object");
+                            Navigator.pushNamed(context, 'MessagesList');
+                          }),
+                          SizedBox(height: 25),
+                          IconButton(icon: Icon(FontAwesome.plus,color: Colors.purple,), onPressed: (){
+                            print("object");
+                            Navigator.pushNamed(context, 'createVideo');
+                          }),
+                          SizedBox(height: 25),
+                          IconButton(icon: Icon(FontAwesome.search,color: Colors.white), onPressed: (){
+                            print("object");
+                            Navigator.pushNamed(context, 'SearchVideoScreen');
+                          }),
+                          SizedBox(height: 25),
+                           IconButton(icon: Icon(FontAwesome.user,color: Colors.white,), onPressed: (){
+                            Navigator.pushNamed(context, 'profile');
+                          })
+                        ],
+                      ),
+                    ),
+                ),
+              ),
+            /*  Container(
                 margin: EdgeInsets.fromLTRB(0, 0, 0, 250),
                 child:  RightSideBar(),
-              )
+              ),*/
 
 
 
@@ -284,7 +323,7 @@ class _DashboardScreenState extends State<DashboardScreen>  with SingleTickerPro
   
   
   Widget get friendsStatus => Container(
-    height: 70,
+    height: 100,
     child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: 7,
@@ -297,10 +336,18 @@ class _DashboardScreenState extends State<DashboardScreen>  with SingleTickerPro
                    Navigator.pushNamed(context, 'BoomerangScreen');
                  },
                  child: Padding(padding: EdgeInsets.all(9.0),
-                   child: CircleAvatar(
-                       radius: 25,
-                       backgroundImage: AssetImage("assets/img/profile.png")
-                   ),
+                   child: Column(
+                     children: <Widget>[
+                       CircleAvatar(
+                           radius: 25,
+                           backgroundImage: AssetImage("assets/img/profile.png")
+                       ),
+                       Text("John doe",style: GoogleFonts.poppins(
+                         fontSize: 10,
+                         color: Colors.white
+                       ),)
+                     ],
+                   )
                  ),
                )
             ],
