@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,14 @@ import 'package:tiktok/helpers/colors.dart';
 import 'package:tiktok/screens/components/RightSideBar.dart';
 
 class DashboardScreen extends StatefulWidget {
+
+  final List<CameraDescription> cameraDescription;
+
+  const DashboardScreen({
+    Key key,
+    @required this.cameraDescription
+  }):super(key:key);
+
   @override
   State<StatefulWidget> createState() {
     return _DashboardScreenState();
@@ -17,6 +26,7 @@ class _DashboardScreenState extends State<DashboardScreen>  with SingleTickerPro
 
   bool isOpened = false;
   AnimationController _animationController;
+  CameraController _controller;
   Animation<Color> _buttonColor;
   Animation<double> _animationIcon;
   Animation<double> _translateButton;
@@ -44,19 +54,14 @@ class _DashboardScreenState extends State<DashboardScreen>  with SingleTickerPro
               child:Row(
                 children: <Widget>[
                   Expanded(child: Container(
-
                     child: SingleChildScrollView(
                         child: Text("",style: TextStyle(color: Colors.white),),
                     ),
-
                   ),
-
                   ),
                   RightSideBar()
                 ],
-
               )
-
           ),
           bottomSection,
 
@@ -157,6 +162,7 @@ class _DashboardScreenState extends State<DashboardScreen>  with SingleTickerPro
 
   @override
   void initState() {
+    super.initState();
     _animationController = AnimationController(vsync: this,duration: Duration(milliseconds: 500))
       ..addListener(() {
         setState(() {
@@ -173,7 +179,15 @@ class _DashboardScreenState extends State<DashboardScreen>  with SingleTickerPro
         CurvedAnimation(parent: _animationController,
             curve: Interval(0.0, 0.75,curve: _curve)));
 
-    super.initState();
+    _controller = new CameraController(widget.cameraDescription[0], ResolutionPreset.medium);
+    _controller.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+    });
+
+
   }
 
   void dispose() {

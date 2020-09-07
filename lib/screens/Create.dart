@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,14 @@ import 'package:tiktok/helpers/colors.dart';
 import 'package:tiktok/screens/components/RightSideBar.dart';
 
 class CreateVideoScreen extends StatefulWidget {
+
+  final List<CameraDescription> cameraDescription;
+
+  const CreateVideoScreen({
+    Key key,
+    @required this.cameraDescription
+  }):super(key:key);
+
   @override
   State<StatefulWidget> createState() {
     return _CreateVideoScreenState();
@@ -14,6 +23,10 @@ class CreateVideoScreen extends StatefulWidget {
 }
 
 class _CreateVideoScreenState extends State<CreateVideoScreen>  with SingleTickerProviderStateMixin {
+
+
+  CameraController _controller;
+  Future<void> _initializeControllerFuture;
 
   bool isOpened = false;
   AnimationController _animationController;
@@ -23,132 +36,80 @@ class _CreateVideoScreenState extends State<CreateVideoScreen>  with SingleTicke
   Curve _curve = Curves.easeOut;
   double _fabHeight = 56.0;
 
+
+
+
   @override
   Widget build(BuildContext context) {
     var mediaquery = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.transparent,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: null,
-      body:  SafeArea(
-          child: Column(
-        /*top status */
-        children: <Widget>[
-        /*  Container(
-            margin: EdgeInsets.all(5),
-            width: mediaquery.width,
-            child:friendsStatus ,
-          ),*/
-          /*for the page content*/
-          Expanded(
-              child:Row(
-                children: <Widget>[
-                  Container(
-                    margin:EdgeInsets.fromLTRB(15, 0, 0, 0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(AntDesign.setting,color: Colors.white,size: 35),
-                          onPressed: (){
-                            print("object");
-                          },
-                        ),
-                        SizedBox(height: 25),
-                        IconButton(
-                          icon: Icon(AntDesign.camera,color: Colors.white,size: 35),
-                          onPressed: (){
-                            print("object");
-                          },
-                        ),
-                        SizedBox(height: 25),
-                        IconButton(
-                          icon: Icon(Icons.flash_on,color: Colors.white,size: 35),
-                          onPressed: (){
-                            print("object");
-                          },
-                        ),
-                        SizedBox(height: 25),
-                        IconButton(
-                          icon: Icon(Icons.close,color: Colors.white,size: 35),
-                          onPressed: (){
-                            print("object");
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(child: Container(
+      body: SafeArea(
+          child:Stack(
+            children: <Widget>[
 
-                    child: SingleChildScrollView(
-                        child: Text("",style: TextStyle(color: Colors.white)),
-                    ),
+              Container(
 
-                  ),
+                  height: MediaQuery.of(context).size.height,
+                  child: AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    child: new CameraPreview(_controller),
+                  )
 
-                  ),
-
-                ],
-
-              )
-
-          ),
-          bottomSectionPickup,
-
-        ],
-        /*main display*/
-
-        /**/
-
-      )),
+              ),
+              bottomSectionPickup,
+              topLeftSectionPickup,
+            ],
+          )),
       bottomNavigationBar: CurvedNavigationBar(
         height: 70,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.transparent,
         index: 1,
 
         items: [
           Padding(
-            padding: EdgeInsets.all(0),
-            child: InkWell(
-              onTap: (){
-                print("up");
-              },
-              child: Icon(
-                FontAwesome.music,
-                color: Colors.white,
-              ),
+              padding: EdgeInsets.all(15),
+              child: InkWell(
+                onTap: (){
+                  print("up");
+                },
+                child: Icon(
+                  FontAwesome.music,
+                  color: Colors.white,
+                ),
 
-            )
+              )
           ),
           Padding(
-            padding: EdgeInsets.all(4),
-            child: IconButton(
-              icon: Icon(
-                AntDesign.videocamera,
-                color: Colors.white,
-              ),
-              onPressed: (){
-                print("object");
-              },
-            )
+              padding: EdgeInsets.all(4),
+              child: IconButton(
+                icon: Icon(
+                  AntDesign.videocamera,
+                  color: Colors.white,
+                ),
+                onPressed: (){
+                  print("object");
+                },
+              )
           ),
           Padding(
-            padding: EdgeInsets.all(4),
-            child: GestureDetector(
-              child: Icon(
-                AntDesign.API,
-                color: Colors.white,
-              ),
-              onTap: (){
-                Navigator.pushNamed(context, 'ForFilters');
-              },
-            )
+              padding: EdgeInsets.all(14),
+              child: GestureDetector(
+                child: Icon(
+                  AntDesign.API,
+                  color: Colors.purple,
+                ),
+                onTap: (){
+                  Navigator.pushNamed(context, 'ForFilters');
+                },
+              )
           ),
         ],
 
         color: primaryBottomBg,
       ),
-
     );
   }
 
@@ -164,6 +125,7 @@ class _CreateVideoScreenState extends State<CreateVideoScreen>  with SingleTicke
 
   @override
   void initState() {
+    super.initState();
     _animationController = AnimationController(vsync: this,duration: Duration(milliseconds: 500))
       ..addListener(() {
         setState(() {
@@ -180,7 +142,14 @@ class _CreateVideoScreenState extends State<CreateVideoScreen>  with SingleTicke
         CurvedAnimation(parent: _animationController,
             curve: Interval(0.0, 0.75,curve: _curve)));
 
-    super.initState();
+
+    _controller = new CameraController(widget.cameraDescription[0], ResolutionPreset.medium);
+    _controller.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+    });
   }
 
   void dispose() {
@@ -212,99 +181,144 @@ class _CreateVideoScreenState extends State<CreateVideoScreen>  with SingleTicke
     );
   }
 
-  Widget get bottomSectionPickup => Container(
-    alignment: Alignment(0.0,1.0),
-    margin: EdgeInsets.fromLTRB(0, 0, 0, 40),
-    width: MediaQuery.of(context).size.width,
-    height: 100,
-    child: Column(
-      children: <Widget>[
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text("Slower",style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize:16
-            )),
-            SizedBox(width: 20),
-            Text("Slow",style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize:16
-            )),
-            SizedBox(width: 20),
-            Container(
+  Widget get bottomSectionPickup => Align(
+    alignment: Alignment.bottomCenter,
+    child: Container(
+      margin: EdgeInsets.fromLTRB(0, 0, 0, 40),
+      width: MediaQuery.of(context).size.width,
+      height: 100,
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text("Slower",style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize:16
+              )),
+              SizedBox(width: 20),
+              Text("Slow",style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize:16
+              )),
+              SizedBox(width: 20),
+              Container(
 
-              width: 100,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [primaryRedColor,primaryPurpleColor,primaryBlueColorDark,primaryBlueColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      stops: [0,0.2,0.8,0]
+                  width: 100,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [primaryRedColor,primaryPurpleColor,primaryBlueColorDark,primaryBlueColor],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          stops: [0,0.2,0.8,0]
+                      ),
+                      borderRadius: BorderRadius.circular(30.0)
                   ),
-                  borderRadius: BorderRadius.circular(30.0)
+                  child: Center(
+                    child: Text("Normal",style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontSize:16
+                    )),
+                  )
               ),
-              child: Center(
-                child: Text("Normal",style: GoogleFonts.poppins(
+              SizedBox(width: 20),
+              Text("Fast",style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize:16
+              )),
+              SizedBox(width: 20),
+              Text("Faster",style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize:16
+              )),
+            ],
+          ),
+          SizedBox(height: 30),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              InkWell(
+                onTap: (){
+                  Navigator.pushNamed(context, 'DraftsVideosScreen');
+                },
+                child:  Text("Drafts",style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontSize:16
                 )),
-              )
-            ),
-            SizedBox(width: 20),
-            Text("Fast",style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize:16
-            )),
-            SizedBox(width: 20),
-            Text("Faster",style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize:16
-            )),
-          ],
-        ),
-        SizedBox(height: 30),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            InkWell(
-              onTap: (){
-                Navigator.pushNamed(context, 'DraftsVideosScreen');
-              },
-              child:  Text("Drafts",style: GoogleFonts.poppins(
+              ),
+
+              SizedBox(width: 20),
+              Text("Video",style: GoogleFonts.poppins(
+                  color: primaryPurpleColor,
+                  fontSize:16
+              )),
+              SizedBox(width: 20),
+              InkWell(
+                onTap: (){
+                  Navigator.pushNamed(context, 'Gallery');
+                },
+                child:Text("Gallery",style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize:16
+                )),
+              ),
+
+              SizedBox(width: 20),
+              Text("Photo",style: GoogleFonts.poppins(
                   color: Colors.white,
                   fontSize:16
               )),
-            ),
-
-            SizedBox(width: 20),
-            Text("Video",style: GoogleFonts.poppins(
-                color: primaryPurpleColor,
-                fontSize:16
-            )),
-            SizedBox(width: 20),
-            InkWell(
-              onTap: (){
-                Navigator.pushNamed(context, 'Gallery');
-              },
-              child:Text("Gallery",style: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontSize:16
-              )),
-            ),
-
-            SizedBox(width: 20),
-            Text("Photo",style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize:16
-            )),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     ),
   );
-  
-  
+ Widget get topLeftSectionPickup => Align(
+   alignment: Alignment.topLeft,
+   child: Row(
+     children: <Widget>[
+       Container(
+         margin:EdgeInsets.fromLTRB(15, 0, 0, 0),
+         child: Column(
+           mainAxisAlignment: MainAxisAlignment.center,
+           children: <Widget>[
+             IconButton(
+               icon: Icon(AntDesign.setting,color: Colors.white,size: 35),
+               onPressed: (){
+                 print("object");
+               },
+             ),
+             SizedBox(height: 25),
+             IconButton(
+               icon: Icon(AntDesign.camera,color: Colors.white,size: 35),
+               onPressed: (){
+                 print("object");
+               },
+             ),
+             SizedBox(height: 25),
+             IconButton(
+               icon: Icon(Icons.flash_on,color: Colors.white,size: 35),
+               onPressed: (){
+                 print("object");
+               },
+             ),
+             SizedBox(height: 25),
+             IconButton(
+               icon: Icon(Icons.close,color: Colors.white,size: 35),
+               onPressed: (){
+                 print("object");
+               },
+             ),
+           ],
+         ),
+       ),
+     ],
+
+   )
+ );
+
+
   Widget get friendsStatus => Container(
     height: 70,
     child: ListView.builder(
@@ -316,8 +330,8 @@ class _CreateVideoScreenState extends State<CreateVideoScreen>  with SingleTicke
             children: <Widget>[
               Padding(padding: EdgeInsets.all(9.0),
                 child: CircleAvatar(
-                  radius: 25,
-                  backgroundImage: AssetImage("assets/img/profile.png")
+                    radius: 25,
+                    backgroundImage: AssetImage("assets/img/profile.png")
                 ),
               ),
             ],

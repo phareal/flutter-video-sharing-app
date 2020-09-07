@@ -8,31 +8,30 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-
+import 'package:image/image.dart' as imageLib;
 import 'package:photofilters/photofilters.dart';
 import 'package:tiktok/helpers/colors.dart';
-import 'package:tiktok/screens/components/PhotoViewScreen.dart';
 import 'package:tiktok/screens/components/RightSideBar.dart';
 
-class ScreenForFilters extends StatefulWidget {
+class PhotoViewScreen extends StatefulWidget {
 
-  final List<CameraDescription> cameraDescriptions;
+  final String imagePath;
 
 
 
-  const ScreenForFilters({
+  const PhotoViewScreen({
     Key key,
-    @required this.cameraDescriptions
+    this.imagePath
   }):super(key:key);
 
 
   @override
   State<StatefulWidget> createState() {
-    return _ScreenForFiltersState();
+    return _PhotoViewScreenState();
   }
 }
 
-class _ScreenForFiltersState extends State<ScreenForFilters>  with SingleTickerProviderStateMixin {
+class _PhotoViewScreenState extends State<PhotoViewScreen>  with SingleTickerProviderStateMixin {
 
   List<Filter> filters = presetFiltersList;
   bool isOpened = false;
@@ -48,6 +47,7 @@ class _ScreenForFiltersState extends State<ScreenForFilters>  with SingleTickerP
   @override
   Widget build(BuildContext context) {
     var mediaquery = MediaQuery.of(context).size;
+    getImage(context);
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -60,13 +60,10 @@ class _ScreenForFiltersState extends State<ScreenForFilters>  with SingleTickerP
               Container(
 
                   height: MediaQuery.of(context).size.height,
-                  child: AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    child: new CameraPreview(_controller),
-                  )
+                  child: Image.file(File(widget.imagePath))
 
               ),
-
+              bottomSectionPickup,
             ],
           )
       ),
@@ -158,16 +155,6 @@ class _ScreenForFiltersState extends State<ScreenForFilters>  with SingleTickerP
         .animate(
         CurvedAnimation(parent: _animationController,
             curve: Interval(0.0, 0.75,curve: _curve)));
-
-
-
-    _controller = new CameraController(widget.cameraDescriptions[0], ResolutionPreset.medium);
-    _controller.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
-    });
   }
 
   void dispose() {
@@ -178,17 +165,19 @@ class _ScreenForFiltersState extends State<ScreenForFilters>  with SingleTickerP
   void takePicture(BuildContext context) async{
     try {
       final path = join((await getTemporaryDirectory()).path,'${DateTime.now()}.png',);
-       await _controller.takePicture(path);
+      await _controller.takePicture(path);
 
-       if (path != null){
-         //call display feature
-         Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => PhotoViewScreen(imagePath: path,)));
-       }
-       print("path is $path");
+      if (path != null){
+        //call display feature
+        setState(() {
+          pictureIsTaken = true;
+        });
+      }
+      print("path is $path");
 
     } catch (e) {
 
-    print(e);
+      print(e);
 
     }
   }
@@ -218,7 +207,7 @@ class _ScreenForFiltersState extends State<ScreenForFilters>  with SingleTickerP
   }
 
   Widget get bottomSectionPickup => Align(
-      alignment: Alignment.bottomCenter,
+    alignment: Alignment.bottomCenter,
     child:  Container(
       alignment: Alignment(0.0,1.0),
       margin: EdgeInsets.fromLTRB(0, 0, 0, 40),
@@ -285,8 +274,8 @@ class _ScreenForFiltersState extends State<ScreenForFilters>  with SingleTickerP
             children: <Widget>[
               Padding(padding: EdgeInsets.all(9.0),
                 child: CircleAvatar(
-                  radius: 25,
-                  backgroundImage: AssetImage("assets/img/profile.png")
+                    radius: 25,
+                    backgroundImage: AssetImage("assets/img/profile.png")
                 ),
               ),
             ],
@@ -303,8 +292,8 @@ class _ScreenForFiltersState extends State<ScreenForFilters>  with SingleTickerP
             children: <Widget>[
               Padding(padding: EdgeInsets.all(9.0),
                 child: CircleAvatar(
-                  radius: 25,
-                  backgroundImage: AssetImage("assets/img/profile.png")
+                    radius: 25,
+                    backgroundImage: AssetImage("assets/img/profile.png")
                 ),
               ),
             ],
@@ -312,5 +301,32 @@ class _ScreenForFiltersState extends State<ScreenForFilters>  with SingleTickerP
         }
     ),
   );
+
+  Future getImage(context) async {
+    var imageFile = File(widget.imagePath);
+    var fileName = basename(imageFile.path);
+    var image = imageLib.decodeImage(imageFile.readAsBytesSync());
+    image = imageLib.copyResize(image, width: 100);
+    Map imagefile = await Navigator.push(
+      context,
+      new MaterialPageRoute(
+        builder: (context) => new PhotoFilterSelector(
+          title: Text("Apply filter"),
+          appBarColor: primaryBottomBg,
+          image: image,
+          filters: presetFiltersList,
+          filename: fileName,
+          loader: Center(child: CircularProgressIndicator()),
+          fit: BoxFit.contain,
+        ),
+      ),
+    );
+    if (imagefile != null && imagefile.containsKey('image_filtered')) {
+      setState(() {
+        imageFile = imagefile['image_filtered'];
+      });
+      print(imageFile.path);
+    }
+  }
 
 }

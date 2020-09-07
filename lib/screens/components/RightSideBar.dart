@@ -120,7 +120,7 @@ class _RightSideBarState extends State<RightSideBar> with SingleTickerProviderSt
                      backgroundColor: Colors.purple,
                      child: IconButton(icon: Icon(FontAwesome.plus), onPressed: (){
         print("object");
-        Navigator.pushNamed(context, 'ForVideoFilters');
+        Navigator.pushNamed(context, 'createVideo');
       })
                  ), SpeedDialChild(
                      onTap: () => print('FIRST CHILD'),

@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok/helpers/colors.dart';
 import 'package:tiktok/screens/BoomerangScreen.dart';
@@ -20,11 +21,22 @@ import 'package:tiktok/screens/SetPasswordScreen.dart';
 import 'dart:async';
 
 import 'package:tiktok/screens/SignUp.dart';
+import 'package:tiktok/screens/components/PhotoViewScreen.dart';
+
 void main() async {
-  runApp(Main());
+
+  WidgetsFlutterBinding.ensureInitialized();
+  final cameras = await availableCameras();
+  runApp(Main(cameraDescription: cameras,));
 }
 
 class Main extends StatelessWidget {
+  final List<CameraDescription> cameraDescription;
+
+  const Main({
+    Key key,
+    @required this.cameraDescription}):super(key:key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,8 +54,8 @@ class Main extends StatelessWidget {
         'setPassword' : (context) => SetPasswordScreen(),
         'dashboard' : (context) => DashboardScreen(),
         'profile' : (context) => ProfilePage(),
-        'createVideo' : (context) => CreateVideoScreen(),
-        'ForFilters' : (context) => ScreenForFilters(),
+        'createVideo' : (context) => CreateVideoScreen(cameraDescription: this.cameraDescription,),
+        'ForFilters' : (context) => ScreenForFilters(cameraDescriptions: this.cameraDescription),
         'ForVideoFilters' : (context) => ScreenForVideosFilters(),
         'SelectBackground' : (context) => SelectBackgroundScreen(),
         'EditUserProfile' : (context) => EditUserProfile(),
@@ -54,6 +66,7 @@ class Main extends StatelessWidget {
         'BoomerangScreen' : (context) => BoomerangScreen(),
         'CloseFriendScreen' : (context) => CloseFriendsScreen(),
         'Gallery' : (context) => GalleryScreen(),
+        'PhotoView' : (context) => PhotoViewScreen(),
       },
       initialRoute: 'splash',
 
