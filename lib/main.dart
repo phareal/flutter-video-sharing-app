@@ -21,6 +21,7 @@ import 'package:tiktok/screens/SetPasswordScreen.dart';
 import 'dart:async';
 
 import 'package:tiktok/screens/SignUp.dart';
+import 'package:tiktok/screens/StoryOne.dart';
 import 'package:tiktok/screens/components/PhotoViewScreen.dart';
 
 void main() async {
@@ -64,9 +65,10 @@ class Main extends StatelessWidget {
         'DraftsVideosScreen' : (context) => DraftsVideosScreen(),
         'SearchVideoScreen' : (context) => SearchVideosScreen(),
         'BoomerangScreen' : (context) => BoomerangScreen(),
-        'CloseFriendScreen' : (context) => CloseFriendsScreen(),
+        'CloseFriendScreen' : (context) => CloseFriendsScreen(cameraDescriptions: this.cameraDescription,),
         'Gallery' : (context) => GalleryScreen(),
         'PhotoView' : (context) => PhotoViewScreen(),
+        'StoryOne' : (context) => StoryOneScreen(cameraDescriptions: this.cameraDescription,),
       },
       initialRoute: 'splash',
 

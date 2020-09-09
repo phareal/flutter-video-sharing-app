@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,14 @@ import 'package:tiktok/helpers/colors.dart';
 import 'package:tiktok/screens/components/RightSideBar.dart';
 
 class CloseFriendsScreen extends StatefulWidget {
+
+  final List<CameraDescription> cameraDescriptions;
+
+  const CloseFriendsScreen({
+    Key key,
+    @required this.cameraDescriptions
+  }):super(key:key);
+
   @override
   State<StatefulWidget> createState() {
     return _CloseFriendsScreenState();
@@ -22,6 +31,7 @@ class _CloseFriendsScreenState extends State<CloseFriendsScreen>  with SingleTic
   Animation<double> _translateButton;
   Curve _curve = Curves.easeOut;
   double _fabHeight = 56.0;
+  CameraController _controller;
 
   @override
   Widget build(BuildContext context) {
@@ -31,39 +41,42 @@ class _CloseFriendsScreenState extends State<CloseFriendsScreen>  with SingleTic
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: null,
       body:  SafeArea(
-          child: Column(
+          child: Stack(
             /*top status */
             children: <Widget>[
-              /*  Container(
-            margin: EdgeInsets.all(5),
-            width: mediaquery.width,
-            child:friendsStatus ,
-          ),*/
-              /*for the page content*/
-              Expanded(
+              Container(
+
+                  height: MediaQuery.of(context).size.height,
+                  child: AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    child: new CameraPreview(_controller),
+                  )
+
+              ),
+              Container(
                   child:Row(
                     children: <Widget>[
                       Container(
-                        margin:EdgeInsets.fromLTRB(15, 0, 0, 0),
+                        margin:EdgeInsets.fromLTRB(15, 50, 0, 0),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
+                           GestureDetector(
+                             child: Text("Aa",style: GoogleFonts.poppins(
+                               color: Colors.white,
+                               fontSize: 40,
+                               fontWeight: FontWeight.bold
+                             )),
+                           ),
+                            SizedBox(height: 25),
                             IconButton(
-                              icon: Icon(AntDesign.setting,color: Colors.white,size: 35),
+                              icon: Icon(AntDesign.smile_circle,color: Colors.white,size: 35),
                               onPressed: (){
                                 print("object");
                               },
                             ),
                             SizedBox(height: 25),
                             IconButton(
-                              icon: Icon(AntDesign.camera,color: Colors.white,size: 35),
-                              onPressed: (){
-                                print("object");
-                              },
-                            ),
-                            SizedBox(height: 25),
-                            IconButton(
-                              icon: Icon(Icons.flash_on,color: Colors.white,size: 35),
+                              icon: Icon(MaterialCommunityIcons.volume_high,color: Colors.white,size: 35),
                               onPressed: (){
                                 print("object");
                               },
@@ -106,35 +119,77 @@ class _CloseFriendsScreenState extends State<CloseFriendsScreen>  with SingleTic
         color: primaryBottomBg,
         backgroundColor: Colors.black,
         buttonBackgroundColor: Colors.white,
+        index: 1,
         items: <Widget>[
           GestureDetector(
 
-            child: CircleAvatar(
-              radius: 20,
-              backgroundImage:AssetImage("assets/img/profile.png"),
-            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+
+                Container(
+                  margin:EdgeInsets.fromLTRB(0, 15, 0, 0),
+                  child: CircleAvatar(
+                    radius: 15,
+                    backgroundImage:AssetImage("assets/img/profile.png"),
+                  ),
+                ),
+                SizedBox(height: 2,),
+                Text("My Story",style: GoogleFonts.poppins(
+                  color: Colors.white
+                ),)
+              ],
+            )
           ),
 
           GestureDetector(
             onTap: (){
               print("object");
             },
-            child: Icon(
-              Icons.send,
-              color: Colors.purple,
+            child: Container(
+              margin:EdgeInsets.fromLTRB(0, 2, 0, 0),
+              child: Icon(Icons.send,color: Colors.purple,)
             ),
 
           ),
           GestureDetector(
-            onTap: (){
-              print("object");
-            },
-            child: Icon(
-              MaterialCommunityIcons.nature_people,
-              color: Colors.white,
-            ),
 
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                    child:  Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          margin:EdgeInsets.fromLTRB(0, 2, 0, 0),
+                          child: CircleAvatar(
+                            radius: 15,
+                            backgroundImage:AssetImage("assets/img/profile.png"),
+                          ),
+                        ),
+                        Container(
+                          margin:EdgeInsets.fromLTRB(0, 2, 0, 0),
+                          child: CircleAvatar(
+                            radius: 15,
+                            backgroundImage:AssetImage("assets/img/profile.png"),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 2,),
+                  Text("Close friends",style: GoogleFonts.poppins(
+                      color: Colors.white
+                  ),)
+                ],
+              )
           ),
+
 
         ],
         onTap: (index) {
@@ -157,23 +212,15 @@ class _CloseFriendsScreenState extends State<CloseFriendsScreen>  with SingleTic
 
   @override
   void initState() {
-    _animationController = AnimationController(vsync: this,duration: Duration(milliseconds: 500))
-      ..addListener(() {
-        setState(() {
-
-        });
-      });
-    _animationIcon = Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
-    _buttonColor = ColorTween(begin: Colors.blue,end:Colors.red).animate(CurvedAnimation(parent: _animationController,
-        curve: Interval(0.00, 1)
-    ));
-
-    _translateButton =  Tween<double>(begin: _fabHeight, end: -14)
-        .animate(
-        CurvedAnimation(parent: _animationController,
-            curve: Interval(0.0, 0.75,curve: _curve)));
-
     super.initState();
+
+    _controller = new CameraController(widget.cameraDescriptions[0], ResolutionPreset.medium);
+    _controller.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+    });
   }
 
   void dispose() {
@@ -182,28 +229,6 @@ class _CloseFriendsScreenState extends State<CloseFriendsScreen>  with SingleTic
   }
 
 
-  Widget profileButton(){
-    return Container(
-      child: FloatingActionButton(
-        heroTag: "btn1",
-        onPressed: (){
-
-        },
-        tooltip: 'Profile',
-      ),
-    );
-  }
-  Widget toggleButton(){
-    return Container(
-      child: FloatingActionButton(
-        heroTag: "btn1",
-        onPressed: (){
-          animate();
-        },
-        tooltip: 'Profile',
-      ),
-    );
-  }
 
   Widget get bottomSectionPickup => Container(
     alignment: Alignment(0.0,1.0),
